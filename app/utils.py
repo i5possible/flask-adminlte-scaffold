@@ -3,6 +3,7 @@
 import html
 import json
 import datetime
+import os
 from urllib.parse import unquote
 from app.models import CfgNotify
 from flask import Response, flash
@@ -118,3 +119,32 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+
+def walk_dir_full_path(directory):
+    catalog = {}
+    for path, directories, files in os.walk(directory):
+        file_list = []
+        for filename in files:
+            file_list.append(filename)
+        catalog[path] = file_list
+    return catalog
+
+
+def walk_dir(directory):
+    catalog = {}
+    abs_dir = os.path.abspath(directory)
+    cur_list = os.listdir(abs_dir)
+
+    file_list = []
+    dir_list = []
+    for file in cur_list:
+        file_path = os.path.abspath(os.path.join(directory, file))
+        if os.path.isfile(file_path):
+            file_list.append(file)
+        elif os.path.isdir(file_path):
+            dir_list.append(file)
+    catalog["directories"] = dir_list
+    catalog["files"] = file_list
+
+    return catalog
