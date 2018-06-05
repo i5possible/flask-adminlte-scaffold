@@ -67,34 +67,32 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <h4><i class="icon fa fa-info"></i> 温馨提示</h4>
         </div>
-        <div class="widearea-wrapper">
-            <div class="widearea-icons" id="widearea-1" style="left: 1034px; top: 176px;">
-                <a class="widearea-icon fullscreen" title="WideArea Mode" href="javascript:void(0);" draggable="false"></a>
-            </div>
-        </div>
 
         <div id="widearea-container">
-          <textarea placeholder="Type something..." data-widearea="enable"></textarea>
+          <textarea id="project-config" placeholder="Type something..." data-widearea="enable"></textarea>
         </div>
 
-        <div class="detail-widearea">
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    import {wideArea} from "../static/plugins/widearea/widearea";
-
+    wideArea();
     function initPage() {
         var jsInObj = null;
-        wideArea();
+        var config = {"path":"resources/file2.txt"}
+        restTemplate("GET", "/project/config", config, function (jsOutObj) {
+            $("#project-config").text(jsOutObj.config_content)
+        })
         restTemplate("GET", "/stats/summary", jsInObj, function (jsOutObj) {
             $("#count01").text(jsOutObj.batch_count);
             $("#count02").text(jsOutObj.test_count);
             $("#count03").text(jsOutObj.succ_count);
             $("#count04").text(jsOutObj.fail_count);
         });
+        {#restTemplate("GET", "/project/config" jsInObj, function (jsOutOjb) {#}
+
     }
 </script>
 {% endblock %}
