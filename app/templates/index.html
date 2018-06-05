@@ -66,19 +66,29 @@
         <div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <h4><i class="icon fa fa-info"></i> 温馨提示</h4>
-            <ol>
-                <li>温馨提示温馨提示温馨提示</li>
-                <li>温馨提示温馨提示温馨提示</li>
-            </ol>
         </div>
+        <div class="widearea-wrapper">
+            <div class="widearea-icons" id="widearea-1" style="left: 1034px; top: 176px;">
+                <a class="widearea-icon fullscreen" title="WideArea Mode" href="javascript:void(0);" draggable="false"></a>
+            </div>
+        </div>
+
+        <div id="widearea-container">
+          <textarea placeholder="Type something..." data-widearea="enable"></textarea>
+        </div>
+
+        <div class="detail-widearea">
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    import {wideArea} from "../static/plugins/widearea/widearea";
+
     function initPage() {
         var jsInObj = null;
+        wideArea();
         restTemplate("GET", "/stats/summary", jsInObj, function (jsOutObj) {
             $("#count01").text(jsOutObj.batch_count);
             $("#count02").text(jsOutObj.test_count);
