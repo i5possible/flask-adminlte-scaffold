@@ -4,11 +4,15 @@ from conf.config import config
 import logging
 from logging.config import fileConfig
 import os
+from os import path
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
-fileConfig('conf/log-app.conf')
+tem_path = 'conf/log-app.conf'
+log_file_path = path.join(path.dirname(path.abspath(__file__)), "../", tem_path)
+fileConfig(log_file_path)
+
 
 def get_logger(name):
     return logging.getLogger(name)
